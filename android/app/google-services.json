@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "418872342436",
+    "project_id": "cook-off-eb9e7",
+    "storage_bucket": "cook-off-eb9e7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:418872342436:android:ade36baf5ad2d832c6b331",
+        "android_client_info": {
+          "package_name": "com.example.cook_off"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGzHY_kqi6whybl-SkyS5MVpdQ5PYOrrA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:418872342436:android:cd2126255b67a1f6c6b331",
+        "android_client_info": {
+          "package_name": "com.example.idute_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGzHY_kqi6whybl-SkyS5MVpdQ5PYOrrA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
