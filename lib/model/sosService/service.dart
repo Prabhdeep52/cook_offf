@@ -1,10 +1,7 @@
-
-
 import 'package:cook_off/view/widgets/snackbar.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'dart:io';
-
 
 Future<void> uploadReport({
   required context,
@@ -50,13 +47,13 @@ Future<void> uploadReport({
     if (response.statusCode == 200) {
       final responseJson = await response.stream.bytesToString();
       showSnackBar(context, responseJson);
-     // print('Response: $responseJson');
+      // print('Response: $responseJson');
     } else {
       showSnackBar(context, ' ${response.statusCode}');
       //print('Error: ${response.statusCode}');
     }
   } catch (error) {
     showSnackBar(context, '$error');
-   // print('Error: $error');
+    // print('Error: $error');
   }
 }
