@@ -21,7 +21,7 @@ Future<void> postOrgDataToServer({
 
   final jsonBody = jsonEncode(OrgRegistration.toMap()); // CHECK HERE
 
-  const apiUrl = 'https://resq-api.onrender.com/orgPost';
+  const apiUrl = 'https://cook-zf0x.onrender.com/orgPost';
 
   final response = await http.post(
     Uri.parse(apiUrl),

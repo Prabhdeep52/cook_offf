@@ -74,8 +74,7 @@ app.get('/reportFetch', (req, res) => {
   
 
 // Import org model
-import Org from './models/orgSchema.js';
-
+const Org = require('./models/orgSchema');
 
 //Post request to store the org details in database
 app.post('/orgPost', upload.single('image'), async (req, res) => {
