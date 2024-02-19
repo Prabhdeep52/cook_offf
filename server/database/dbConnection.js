@@ -1,9 +1,9 @@
 const mongoose  = require('mongoose');
-const { mongo_Url } = require('../secrets');
 
 
 
-const mongoURL = mongo_Url
+
+const mongoURL = "mongodb+srv://deepprabh832:helloworld69@cluster0.euq01bt.mongodb.net/?retryWrites=true&w=majority"
 
 async function dbConnection() {
     await mongoose.connect(mongoURL, {

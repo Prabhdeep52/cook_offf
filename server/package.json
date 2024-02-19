@@ -1,6 +1,9 @@
 {
   "name": "server",
   "license": "ISC",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
     "body-parser": "^1.20.2",
     "cloudinary": "^2.0.1",

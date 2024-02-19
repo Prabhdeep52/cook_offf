@@ -3,7 +3,6 @@ const bodyParser = require("body-parser");
 const dbConnection = require("./database/dbConnection");
 const Report = require("./models/reportSchema");
 const cloudinary = require('cloudinary');
-const { clApiKey, clApiSecret, clEnv, clName } = require("./secrets");
 const multer = require('multer');
 
 
@@ -15,9 +14,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 dbConnection().catch((error) => console.error(error));
 
 cloudinary.config({
-    cloud_name: clName,
-    api_key: clApiKey,
-    api_secret: clApiSecret
+    cloud_name: "drmmygovo",
+    api_key: "156997282836991",
+    api_secret: "t0_Tbs1cSBxetFKFX5iyV-ru-To" 
+
   });
 
 
