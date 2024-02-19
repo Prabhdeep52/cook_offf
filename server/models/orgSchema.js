@@ -9,5 +9,7 @@ const orgSchema = new mongoose.Schema({
   long: String,
   logo: String
 });
-//Organization Model
-export default mongoose.model.orgs || mongoose.model("Org", orgSchema);
+
+const  Org = mongoose.model('Org', orgSchema);
+
+module.exports = Org;
