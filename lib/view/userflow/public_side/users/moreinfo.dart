@@ -108,10 +108,6 @@ class _MoreInfoOrgState extends State<MoreInfoOrg> {
     // print(placemarks.last.locality);
   }
 
-  void getLocation() {
-    _getCurrentLocation();
-  }
-
   @override
   void dispose() {
     super.dispose();
@@ -123,7 +119,7 @@ class _MoreInfoOrgState extends State<MoreInfoOrg> {
   @override
   void initState() {
     super.initState();
-    getLocation();
+    _getCurrentLocation();
   }
 
   @override

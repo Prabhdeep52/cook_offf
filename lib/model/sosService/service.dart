@@ -17,8 +17,7 @@ Future<void> uploadReport({
   required File imageFile,
 }) async {
   try {
-    final url = Uri.parse(
-        'https://resq-api.onrender.com/reportPost'); // Replace with your server's URL
+    final url = Uri.parse('https://cook-zf0x.onrender.com/reportPost/');
 
     final request = http.MultipartRequest('POST', url);
 

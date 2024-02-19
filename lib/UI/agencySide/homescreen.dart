@@ -4,9 +4,6 @@ import 'package:geocoding/geocoding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
-
-
 class HomePageOrg extends StatefulWidget {
   const HomePageOrg({Key? key});
 
@@ -21,31 +18,34 @@ class _HomePageOrgState extends State<HomePageOrg> {
   @override
   void initState() {
     // getdate();
-    // fetchData();
     super.initState();
+    fetchData();
   }
 
   Future<dynamic> fetchData() async {
     try {
       final responseData = await fetchDataFromApi();
-      final res = responseData[0]["name"].toString();
-      print(responseData[0]["name"].toString());
-      print("hello");
-      print(responseData);
+      // print(responseData[0]["name"].toString());
+      // print("hello");
+      // print(responseData);
 
       setState(() {
         data = responseData;
       });
       List<String?> locality = [];
 
-      for (int i = 0; i < responseData.length; i++) {
-        String latitude = responseData[i]['lat'];
-        String longitude = responseData[i]['long'];
-        List<Placemark> placemarks = await placemarkFromCoordinates(
-            double.parse(latitude), double.parse(longitude));
+      for (int i = 0; i < data.length; i++) {
+        if (responseData[i]['lat'] != null && data[i]['long'] != null) {
+          String latitude = data[i]['lat'];
+          String longitude = data[i]['long'];
+          List<Placemark> placemarks = await placemarkFromCoordinates(
+              double.parse(latitude), double.parse(longitude));
 
-        String? loc = placemarks.last.street;
-        locality.add(loc);
+          String? loc = placemarks.last.street;
+          locality.add(loc);
+        } else {
+          print("No location data found");
+        }
       }
 
       setState(() {
@@ -129,159 +129,155 @@ class _HomePageOrgState extends State<HomePageOrg> {
               // if (data.isNotEmpty)
 
               // CAUTION :::: REMOVE FUTURE BUILDER AFTER CREATING DEMO VIDEO FIND BETTER SOLUTION
-              FutureBuilder(
-                future: fetchData(),
-                builder: (context, snapshot) {
-                  return ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: data.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return InkWell(
-                        onTap: () {},
-                        child: Column(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.only(
-                                left: 2.w,
-                                bottom: 12.h,
-                                top: 2.h,
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        // "Food Shortage",
-                                        data[index]["dtype"] ?? "Disaster type",
+              if (data.isNotEmpty)
+                ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: data.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return InkWell(
+                      onTap: () {},
+                      child: Column(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.only(
+                              left: 2.w,
+                              bottom: 12.h,
+                              top: 2.h,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      // "Food Shortage",
+                                      data[index]["dtype"] ?? "Disaster type",
+                                      overflow: TextOverflow.ellipsis,
+                                      // data[index]["description"] ??
+                                      //     "description",
+                                      style: TextStyle(
+                                          fontFamily: "Montserrat",
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20.sp),
+                                    ),
+                                    SizedBox(
+                                      height: 6.h,
+                                    ),
+                                    SizedBox(
+                                      height: 15.h,
+                                      width: 180.w,
+                                      child: Text(
+                                        // "The area is flooded with water and people are stuck",
+                                        "Description: ${data[index]["description"] ?? " Description"} ",
                                         overflow: TextOverflow.ellipsis,
-                                        // data[index]["description"] ??
-                                        //     "description",
                                         style: TextStyle(
-                                            fontFamily: "Montserrat",
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20.sp),
-                                      ),
-                                      SizedBox(
-                                        height: 6.h,
-                                      ),
-                                      SizedBox(
-                                        height: 15.h,
-                                        width: 180.w,
-                                        child: Text(
-                                          // "The area is flooded with water and people are stuck",
-                                          "Description: ${data[index]["description"] ?? " Description"} ",
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            fontSize: 10.sp,
-                                            fontWeight: FontWeight.w400,
-                                          ),
+                                          fontSize: 10.sp,
+                                          fontWeight: FontWeight.w400,
                                         ),
-                                      ),
-                                      SizedBox(
-                                        height: 2.h,
-                                      ),
-                                      SizedBox(
-                                        height: 15.h,
-                                        width: 180.w,
-                                        child: Text(
-                                          // "The area is flooded with water and people are stuck",
-                                          "Reported by : ${data[index]["name"] ?? " Name "} ",
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            fontSize: 10.sp,
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 2.h,
-                                      ),
-                                      SizedBox(
-                                        height: 20.h,
-                                        width: 180.w,
-                                        child: Text(
-                                          // "The area is flooded with water and people are stuck",
-                                          "Contact : ${data[index]["contact"]} ",
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            fontSize: 10.sp,
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 2.h,
-                                      ),
-                                      Row(
-                                        children: [
-                                          const Icon(
-                                            Icons.location_pin,
-                                            size: 13,
-                                          ),
-                                          const SizedBox(
-                                            width: 2,
-                                          ),
-                                          SizedBox(
-                                            width: 100.w,
-                                            child: Text(
-                                              Locality[index] ?? "location ",
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 10.w,
-                                          ),
-                                          SizedBox(
-                                            width: 80.w,
-                                            child: Text(
-                                              data[index]["date"] ??
-                                                  " date " +
-                                                      data[index][" time"] ??
-                                                  " time ",
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    width: 15.w,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(right: 10.w),
-                                    child: SizedBox(
-                                      height: 100.h,
-                                      width: 110.w,
-                                      child: Image.network(
-                                        data[index]["image"] ??
-                                            const Placeholder(),
-                                        fit: BoxFit.fill,
                                       ),
                                     ),
+                                    SizedBox(
+                                      height: 2.h,
+                                    ),
+                                    SizedBox(
+                                      height: 15.h,
+                                      width: 180.w,
+                                      child: Text(
+                                        // "The area is flooded with water and people are stuck",
+                                        "Reported by : ${data[index]["name"] ?? " Name "} ",
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontSize: 10.sp,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 2.h,
+                                    ),
+                                    SizedBox(
+                                      height: 20.h,
+                                      width: 180.w,
+                                      child: Text(
+                                        // "The area is flooded with water and people are stuck",
+                                        "Contact : ${data[index]["contact"]} ",
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontSize: 10.sp,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 2.h,
+                                    ),
+                                    Row(
+                                      children: [
+                                        const Icon(
+                                          Icons.location_pin,
+                                          size: 13,
+                                        ),
+                                        const SizedBox(
+                                          width: 2,
+                                        ),
+                                        SizedBox(
+                                          width: 100.w,
+                                          child: Text(
+                                            Locality.length > index
+                                                ? Locality[index] ?? "location"
+                                                : "location",
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 10.w,
+                                        ),
+                                        SizedBox(
+                                          width: 80.w,
+                                          child: Text(
+                                            data[index]["date"] ??
+                                                " date " +
+                                                    data[index][" time"] ??
+                                                " time ",
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: 15.w,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(right: 10.w),
+                                  child: SizedBox(
+                                    height: 100.h,
+                                    width: 110.w,
+                                    child: Image.network(
+                                      data[index]["image"] ??
+                                          const Placeholder(),
+                                      fit: BoxFit.fill,
+                                    ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                            Padding(
-                              padding: EdgeInsets.only(right: 20.w),
-                              child: Divider(
-                                color: Colors.grey[700],
-                              ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(right: 20.w),
+                            child: Divider(
+                              color: Colors.grey[700],
                             ),
-                          ],
-                        ),
-                      );
-                    },
-                  );
-                },
-              ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
               if (data.isEmpty)
                 Container(
                   padding: EdgeInsets.only(top: 150.h),

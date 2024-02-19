@@ -72,7 +72,51 @@ app.get('/reportFetch', (req, res) => {
   Report.find().then((reports) => res.json(reports));
 });
   
-  
+
+// Import org model
+import Org from './models/orgSchema.js';
+
+
+//Post request to store the org details in database
+app.post('/orgPost', upload.single('image'), async (req, res) => {
+  try {
+    let imageUrl = '';
+
+    if (req.file) {
+
+      const imageBuffer = req.file.buffer.toString('base64');
+      const dataUri = `data:${req.file.mimetype};base64,${imageBuffer}`;
+
+
+      const result = await cloudinary.uploader.upload(dataUri, {
+        folder: 'ResQ-Orgs',
+      });
+
+      imageUrl = result.secure_url;
+    }
+
+    const org = new Org({
+      name: req.body.name,
+      description: req.body.description || '',
+      orgtype: req.body.orgtype || '',
+      contact: req.body.contact || '',
+      lat: req.body.lat || '',
+      long: req.body.long || '',
+      logo: imageUrl
+    });
+
+    await org.save()
+    res.json('Report added successfully.');
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ error: 'Bad Request' });
+  }
+});  
+
+app.get('/orgFetch', (req, res) => {
+  Org.find().then((orgs) => res.json(orgs));
+});
+
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });
